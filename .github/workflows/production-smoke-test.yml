@@ -1,0 +1,47 @@
+name: Max production smoke test
+
+on:
+  workflow_dispatch:
+    inputs:
+      base_url:
+        description: HTTPS deployment origin, without a path
+        required: true
+        type: string
+      profile:
+        description: Readiness profile to require
+        required: true
+        default: core
+        type: choice
+        options:
+          - core
+          - full
+      provider_health:
+        description: Sweep active-client providers through the scheduler-secret-protected endpoint
+        required: true
+        default: true
+        type: boolean
+
+permissions:
+  contents: read
+
+jobs:
+  smoke-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.9"
+      - name: Run read-only deployment checks
+        env:
+          MAX_SMOKE_BASE_URL: ${{ inputs.base_url }}
+          MAX_SMOKE_PROFILE: ${{ inputs.profile }}
+          MAX_PROVIDER_HEALTH_SECRET: ${{ secrets.MAX_JOB_RUNNER_SECRET }}
+        run: |
+          args=("$MAX_SMOKE_BASE_URL" --profile "$MAX_SMOKE_PROFILE")
+          if [ "${{ inputs.provider_health }}" = "true" ]; then
+            test -n "$MAX_PROVIDER_HEALTH_SECRET"
+            args+=(--provider-health)
+          fi
+          python scripts/smoke_test_deployment.py "${args[@]}"

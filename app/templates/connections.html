@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Connections · Max</title>
+    <meta name="description" content="Review Max provider configuration and client connection readiness.">
+    <link rel="stylesheet" href="/static/dashboard.css">
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to connections</a>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <a class="brand" href="/dashboard">Max</a>
+        <p class="product-context">Agency operations</p>
+        <nav class="sidebar-nav" aria-label="Workspace navigation">
+          <p class="nav-label">Onboarding</p>
+          <a class="nav-item" href="/dashboard">Clients</a>
+          <a class="nav-item" href="/dashboard/metrics">Overall metrics</a>
+          <p class="nav-label secondary-label">System</p>
+          <a class="nav-item active" href="/dashboard/connections" aria-current="page">Connections</a>
+          <a class="nav-item" href="/dashboard/tasks/approvals">Task approvals</a>
+          <a class="nav-item" href="/dashboard/notifications">Notifications</a>
+          <a class="nav-item" href="/dashboard/slack">Slack</a>
+          <a class="nav-item" href="/docs">API explorer</a>
+        </nav>
+        <p class="environment">Provider configuration<br><span>Secrets hidden</span></p>
+      </aside>
+      <div class="workspace">
+        <header class="topbar"><span>Connection readiness</span><a href="/dashboard">Back to clients</a></header>
+        <main id="main-content" class="connections-page">
+          <section class="page-heading"><div><h1>Connections</h1><p>Max checks configuration without showing tokens, private keys, or client credentials.</p></div></section>
+          <section class="connection-providers" aria-label="Provider configuration">{{PROVIDER_ROWS}}</section>
+          <section class="connection-directory" aria-labelledby="client-connections-title">
+            <header><h2 id="client-connections-title">Client readiness</h2><p>Website work needs a verified repository and linked Vercel project. Search Console remains read-only.</p></header>
+            <div class="connection-head" aria-hidden="true"><span>Client</span><span>GitHub</span><span>Vercel</span><span>Search Console</span><span>Slack</span></div>
+            <div>{{CLIENT_ROWS}}</div>
+          </section>
+        </main>
+      </div>
+    </div>
+  </body>
+</html>

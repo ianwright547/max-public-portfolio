@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Metrics · {{BUSINESS_NAME}} · Max</title>
+    <meta name="description" content="Enter and review historical client metrics in Max.">
+    <link rel="stylesheet" href="/static/dashboard.css">
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to metric entry</a>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <a class="brand" href="/dashboard">Max</a>
+        <p class="product-context">Agency operations</p>
+        <nav class="sidebar-nav" aria-label="Workspace navigation">
+          <p class="nav-label">Client</p>
+          <a class="nav-item" href="/dashboard">All clients</a>
+          <a class="nav-item" href="/dashboard/metrics">Overall metrics</a>
+          <a class="nav-item active" href="/dashboard/clients/{{CLIENT_ID}}/metrics" aria-current="page">Metrics</a>
+          <a class="nav-item" href="/dashboard/clients/{{CLIENT_ID}}/health">Health</a>
+          <a class="nav-item" href="/dashboard/clients/{{CLIENT_ID}}/reports">Reports</a>
+          <a class="nav-item" href="/dashboard/tasks/approvals">Task approvals</a>
+          <p class="nav-label secondary-label">System</p>
+          <a class="nav-item" href="/docs">API explorer</a>
+        </nav>
+        <p class="environment">{{CLIENT_ID}}<br><span>Local · SQLite</span></p>
+      </aside>
+
+      <div class="workspace">
+        <header class="topbar"><span>{{BUSINESS_NAME}}</span><a href="/dashboard">Back to clients</a></header>
+        <main id="main-content" class="metrics-page">
+          <section class="page-heading">
+            <div><h1>Metrics</h1><p>Performance history and source-backed comparisons for {{BUSINESS_NAME}}.</p></div>
+          </section>
+
+          <aside class="source-warning">
+            <strong>No Google connection</strong>
+            <span>Google Business Profile is not connected. Manual, imported, and mock values retain their source labels.</span>
+          </aside>
+          {{NOTICE}}
+
+          {{PERFORMANCE_DASHBOARD}}
+          {{WEBSITE_METRICS}}
+
+          <details class="data-entry">
+            <summary>Add or generate metric data</summary>
+          <section class="entry-layout">
+            <form class="metric-form" method="post" action="/dashboard/clients/{{CLIENT_ID}}/metrics/manual">
+              <header><h2>Manual entry</h2><p>Use information you obtained and verified yourself.</p></header>
+              <label>Metric<select name="metric_name" required>{{METRIC_OPTIONS}}</select></label>
+              <label>Value<input name="value" required placeholder="Example: 42 or 4.7"></label>
+              <label>Measurement period<input type="month" name="measurement_period" required></label>
+              <label class="checkbox-label"><input type="checkbox" name="is_baseline">Use as the starting baseline</label>
+              <button type="submit">Save manual snapshot</button>
+            </form>
+
+            <form class="metric-form mock-form" method="post" action="/dashboard/clients/{{CLIENT_ID}}/metrics/mock">
+              <header><h2>Mock data generator</h2><p>Creates all eight sample metrics for demos and tests.</p></header>
+              <label>Measurement period<input type="month" name="measurement_period" required></label>
+              <label class="checkbox-label"><input type="checkbox" name="mark_as_baseline">Use generated values as baselines</label>
+              <p class="mock-disclosure">Every generated snapshot is permanently labeled <code>mock</code>. It is never presented as Google API data.</p>
+              <button type="submit">Generate mock snapshots</button>
+            </form>
+          </section>
+          </details>
+
+          <section class="integration-summary"><h2>Data sources</h2><p>{{INTEGRATIONS}}</p></section>
+
+          <details class="metric-history">
+            <summary id="history-summary">View all saved snapshots</summary>
+          <section aria-labelledby="history-title">
+            <header><h2 id="history-title">Saved snapshots</h2><p>History is append-only. Older values remain unchanged.</p></header>
+            <div class="metric-history-head" aria-hidden="true"><span>Metric</span><span>Value</span><span>Period</span><span>Source</span><span>Recorded</span></div>
+            {{HISTORY_ROWS}}
+          </section>
+          </details>
+        </main>
+      </div>
+    </div>
+  </body>
+</html>

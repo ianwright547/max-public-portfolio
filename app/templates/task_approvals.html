@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Task approvals · Max</title>
+    <meta name="description" content="Review evidence-backed task proposals before work begins.">
+    <link rel="stylesheet" href="/static/dashboard.css">
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to pending approvals</a>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <a class="brand" href="/dashboard">Max</a>
+        <p class="product-context">Agency operations</p>
+        <nav class="sidebar-nav" aria-label="Workspace navigation">
+          <p class="nav-label">Workspace</p>
+          <a class="nav-item" href="/dashboard">All clients</a>
+          <a class="nav-item" href="/dashboard/metrics">Overall metrics</a>
+          <a class="nav-item active" href="/dashboard/tasks/approvals" aria-current="page">Task approvals</a>
+          <a class="nav-item" href="/dashboard/fulfillment">Fulfillment</a>
+          <a class="nav-item" href="/dashboard/verifications">Verification</a>
+          <a class="nav-item" href="/dashboard/notifications">Notifications</a>
+          <p class="nav-label secondary-label">System</p>
+          <a class="nav-item" href="/docs">API explorer</a>
+        </nav>
+        <p class="environment">Local workspace<br><span>SQLite</span></p>
+      </aside>
+      <div class="workspace">
+        <header class="topbar"><span>Approval queue</span><a href="/dashboard">Back to clients</a></header>
+        <main id="main-content" class="approval-page">
+          <section class="page-heading"><div><h1>Task approvals</h1><p>Review the evidence and exact outcome before authorizing any work.</p></div><span class="pending-total">{{PENDING_COUNT}} pending</span></section>
+          <aside class="approval-boundary"><strong>Approval is permission—not completion.</strong><span>Approving a proposal records authorization. It does not start, complete, verify, or resolve anything.</span></aside>
+          {{NOTICE}}
+          <section class="approval-list" aria-label="Pending task proposals">{{TASKS}}</section>
+        </main>
+      </div>
+    </div>
+  </body>
+</html>

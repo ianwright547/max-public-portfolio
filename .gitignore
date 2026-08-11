@@ -1,0 +1,14 @@
+__pycache__/
+.pytest_cache/
+.venv/
+*.py[cod]
+max.db
+.env
+.env.*
+!.env.example
+.vercel/
+.DS_Store
+
+# Local database sidecar files must never be published.
+*.db-shm
+*.db-wal

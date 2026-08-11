@@ -1,0 +1,9 @@
+[
+  {
+    "name": "Demo Auto Repair",
+    "url": "https://demo-auto.example.com",
+    "project_id": "prj_demo_001",
+    "team_id": "team_demo_001",
+    "framework": "nextjs"
+  }
+]

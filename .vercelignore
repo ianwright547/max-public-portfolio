@@ -1,0 +1,13 @@
+# Production must use Vercel's encrypted environment variables and Neon.
+.env
+.env.*
+!.env.example
+
+# Local SQLite and Python tooling never belong in a serverless deployment.
+max.db
+*.db-shm
+*.db-wal
+.venv
+__pycache__
+.pytest_cache
+tests

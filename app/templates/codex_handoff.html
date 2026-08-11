@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Codex handoff {{PACKET_ID}} · Max</title>
+    <link rel="stylesheet" href="/static/dashboard.css">
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to handoff</a>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <a class="brand" href="/dashboard">Max</a><p class="product-context">Agency operations</p>
+        <nav class="sidebar-nav" aria-label="Workspace navigation"><p class="nav-label">Workspace</p><a class="nav-item" href="/dashboard">All clients</a><a class="nav-item" href="/dashboard/tasks/approvals">Task approvals</a><a class="nav-item active" href="/dashboard/fulfillment">Fulfillment</a><a class="nav-item" href="/dashboard/verifications">Verification</a><a class="nav-item" href="/dashboard/notifications">Notifications</a></nav>
+        <p class="environment">Codex packet<br><span>{{STATUS}}</span></p>
+      </aside>
+      <div class="workspace">
+        <header class="topbar"><span>{{CLIENT_NAME}}</span><a href="/dashboard/fulfillment">Back to fulfillment</a></header>
+        <main id="main-content" class="fulfillment-page">
+          <section class="page-heading"><div><p class="eyebrow">{{PACKET_ID}}</p><h1>{{TASK_TITLE}}</h1><p>Copy the exact handoff below into Codex. Do not add credentials.</p></div><span class="pending-total">{{STATUS}}</span></section>
+          {{NOTICE}}
+          {{HANDOFF_ACTION}}
+          <section class="workspace-note"><h2>Copyable Codex prompt</h2><textarea class="handoff-text" readonly rows="34">{{HANDOFF_TEXT}}</textarea></section>
+          {{RESULT_FORM}}
+          {{CONTENT_REVIEW}}
+          {{QUALITY_GATE}}
+        </main>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Clients · Max</title>
+    <meta name="description" content="Review client onboarding progress and required agency-owner actions in Max.">
+    <link rel="stylesheet" href="/static/dashboard.css">
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to client directory</a>
+
+    <div class="app-shell">
+      <aside class="sidebar">
+        <a class="brand" href="/dashboard">Max</a>
+        <p class="product-context">Agency operations</p>
+
+        <nav class="sidebar-nav" aria-label="Workspace navigation">
+          <p class="nav-label">Onboarding</p>
+          <a class="nav-item active" href="/dashboard" aria-current="page">Clients</a>
+          <a class="nav-item" href="/dashboard/metrics">Overall metrics</a>
+          <span class="nav-item workspace-hint">Open a client to review intake and profile</span>
+
+          <p class="nav-label secondary-label">System</p>
+          <a class="nav-item" href="/dashboard/connections">Connections</a>
+          <a class="nav-item" href="/dashboard/release-readiness">Release readiness</a>
+          <a class="nav-item" href="/dashboard/agency/members">Agency members</a>
+          <a class="nav-item" href="/dashboard/tasks/approvals">Task approvals</a>
+          <a class="nav-item" href="/dashboard/notifications">Notifications</a>
+          <a class="nav-item" href="/dashboard/slack">Slack</a>
+          <a class="nav-item" href="/docs">API explorer</a>
+        </nav>
+
+        <p class="environment">Local workspace<br><span>SQLite</span></p>
+      </aside>
+
+      <div class="workspace">
+        <header class="topbar">
+          <span>Client management</span>
+          <a href="/docs">API documentation</a>
+        </header>
+
+        <main id="main-content">
+          <section class="page-heading">
+            <div>
+              <h1>Clients</h1>
+              <p>Onboarding status and required decisions for every client.</p>
+            </div>
+            <a class="create-link" href="/dashboard/onboarding">Create client</a>
+          </section>
+
+          <section class="summary-strip" aria-label="Client queue summary">
+            <div><strong>{{CLIENT_COUNT}}</strong><span>total clients</span></div>
+            <div><strong>{{ACTION_COUNT}}</strong><span>need onboarding</span></div>
+            <div><strong>{{SUBMITTED_COUNT}}</strong><span>intakes received</span></div>
+          </section>
+
+          <section class="client-directory" aria-labelledby="client-directory-title">
+            <header class="directory-heading">
+              <div>
+                <h2 id="client-directory-title">Client directory</h2>
+                <p>Ordered by the next action you need to take.</p>
+              </div>
+              <p class="directory-key"><span>Owner action</span> / <span>Waiting on Max</span></p>
+            </header>
+
+            <div class="directory-columns" aria-hidden="true">
+              <span>Client</span>
+              <span>Progress</span>
+              <span>Next step</span>
+              <span></span>
+            </div>
+
+            <div class="client-list" role="list">
+              {{CLIENT_ROWS}}
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+  </body>
+</html>

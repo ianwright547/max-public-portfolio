@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+  <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>New intake · Max</title><link rel="stylesheet" href="/static/dashboard.css"></head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to intake form</a>
+    <div class="app-shell">
+      <aside class="sidebar"><a class="brand" href="/dashboard">Max</a><p class="product-context">Agency operations</p><nav class="sidebar-nav" aria-label="Workspace navigation"><p class="nav-label">Onboarding</p><a class="nav-item" href="/dashboard">Clients</a><a class="nav-item" href="/dashboard/onboarding">New client</a><p class="nav-label secondary-label">System</p><a class="nav-item" href="/dashboard/connections">Connections</a><a class="nav-item" href="/dashboard/tasks/approvals">Task approvals</a><a class="nav-item" href="/dashboard/notifications">Notifications</a><a class="nav-item" href="/dashboard/slack">Slack</a></nav><p class="environment">New intake version<br><span>Originals preserved</span></p></aside>
+      <div class="workspace"><header class="topbar"><span>Client onboarding</span><a href="/dashboard/clients/{{CLIENT_ID}}?section=intake">Back to intake history</a></header>
+        <main id="main-content" class="onboarding-page"><section class="page-heading"><div><p class="eyebrow">New intake version</p><h1>{{CLIENT_NAME}}</h1><p>This creates another original onboarding submission. It never edits earlier intakes.</p></div></section>{{ERROR}}
+          <form method="post" action="/dashboard/clients/{{CLIENT_ID}}/intakes/new" class="onboarding-form">
+            <section><p class="eyebrow">Contact and website</p><div class="form-grid two"><label>Phone number <input name="phone_number" required maxlength="50" value="{{PHONE_NUMBER}}" autocomplete="tel"></label><label>Email <input name="email" required type="email" maxlength="320" value="{{EMAIL}}" autocomplete="email"></label><label>Website domain <input name="domain" required maxlength="255" placeholder="example.com" value="{{DOMAIN}}"></label><label>Google Business Profile reference <input name="google_business_profile" required maxlength="500" value="{{GOOGLE_BUSINESS_PROFILE}}"></label></div></section>
+            <section><p class="eyebrow">Business details</p><div class="form-grid"><label>Brand colors <small>Separate colors with commas.</small><input name="brand_colors" required value="{{BRAND_COLORS}}"></label><label>Business hours <input name="business_hours" required maxlength="500" value="{{BUSINESS_HOURS}}"></label><label>Service areas <small>Separate areas with commas.</small><input name="service_areas" required value="{{SERVICE_AREAS}}"></label><label>Enabled workflows <small>Separate workflows with commas.</small><input name="enabled_workflows" required value="{{ENABLED_WORKFLOWS}}"></label><label>Approved asset links <small>Optional. Paste one image, video, or document link per line.</small><textarea name="asset_references" rows="4">{{ASSET_REFERENCES}}</textarea></label></div></section>
+            <footer><p>Use this when the client gives updated onboarding information. Max will keep both versions.</p><button class="primary-button" type="submit">Save new intake version</button></footer>
+          </form>
+        </main>
+      </div>
+    </div>
+  </body>
+</html>

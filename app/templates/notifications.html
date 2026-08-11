@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Notifications · Max</title>
+    <meta name="description" content="Actionable internal notifications without background noise.">
+    <link rel="stylesheet" href="/static/dashboard.css">
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to notifications</a>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <a class="brand" href="/dashboard">Max</a>
+        <p class="product-context">Agency operations</p>
+        <nav class="sidebar-nav" aria-label="Workspace navigation">
+          <p class="nav-label">Workspace</p>
+          <a class="nav-item" href="/dashboard">All clients</a>
+          <a class="nav-item" href="/dashboard/tasks/approvals">Task approvals</a>
+          <a class="nav-item" href="/dashboard/verifications">Verification</a>
+          <a class="nav-item active" href="/dashboard/notifications" aria-current="page">Notifications</a>
+          <a class="nav-item" href="/dashboard/slack">Slack</a>
+          <p class="nav-label secondary-label">System</p>
+          <a class="nav-item" href="/docs">API explorer</a>
+        </nav>
+        <p class="environment">Internal delivery<br><span>{{SLACK_STATUS}}</span></p>
+      </aside>
+      <div class="workspace">
+        <header class="topbar"><span>Meaningful notifications</span><a href="/dashboard">Back to clients</a></header>
+        <main id="main-content" class="notifications-page">
+          <section class="page-heading"><div><h1>Notifications</h1><p>Only events that require attention or communicate a meaningful change.</p></div><span class="pending-total">{{UNREAD_COUNT}} unread</span></section>
+          <form class="notification-filters" method="get" action="/dashboard/notifications"><label>Client<select name="client_id">{{CLIENT_OPTIONS}}</select></label><label class="check-filter"><input type="checkbox" name="unread_only" value="true"{{UNREAD_CHECKED}}> Unread only</label><button type="submit">Filter</button></form>
+          <aside class="notification-boundary"><strong>{{SLACK_BOUNDARY_TITLE}}</strong><span>{{SLACK_BOUNDARY_TEXT}}</span></aside>
+          <section class="notification-list" aria-label="Internal notification list">{{NOTIFICATIONS}}</section>
+        </main>
+      </div>
+    </div>
+  </body>
+</html>

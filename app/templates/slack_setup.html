@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Connect each Max client to one verified public Slack channel.">
+    <title>Slack setup · Max</title>
+    <link rel="stylesheet" href="/static/dashboard.css">
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to Slack setup</a>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div class="wordmark">max</div>
+        <nav aria-label="Main navigation">
+          <a class="nav-item" href="/dashboard">Clients</a>
+          <a class="nav-item" href="/dashboard/metrics">Metrics</a>
+          <a class="nav-item" href="/dashboard/tasks/pending">Approvals</a>
+          <a class="nav-item" href="/dashboard/notifications">Notifications</a>
+          <a class="nav-item active" href="/dashboard/slack" aria-current="page">Slack</a>
+        </nav>
+        <p class="environment">Communication delivery<br><span>{{SLACK_STATUS}}</span></p>
+      </aside>
+      <div class="workspace">
+        <header class="topbar"><span>Slack connection</span><a href="/dashboard">Back to clients</a></header>
+        <main id="main-content" class="slack-page">
+          <section class="page-intro">
+            <p class="eyebrow">Client communication boundary</p>
+            <h1>One public channel for every client.</h1>
+            <p>Max keeps the internal inbox as the permanent record, then sends only meaningful, client-matched events to Slack.</p>
+          </section>
+          <section class="slack-summary" aria-label="Slack setup summary">
+            <div><strong>{{CONNECTED_COUNT}}</strong><span>Channels connected</span></div>
+            <div><strong>{{CLIENT_COUNT}}</strong><span>Total clients</span></div>
+            <div><strong>Public</strong><span>Channel visibility</span></div>
+          </section>
+          <aside class="slack-safety">
+            <strong>What Slack receives</strong>
+            <span>Approvals, critical issues, failures, missing access, major metric changes, cost alerts, and scheduled reports. Routine success and healthy checks stay quiet.</span>
+          </aside>
+          <section class="slack-client-table" aria-labelledby="client-channel-heading">
+            <div class="section-heading"><h2 id="client-channel-heading">Client channels</h2><span>Channel IDs are saved and checked before delivery</span></div>
+            <div class="table-scroll">
+              <table>
+                <thead><tr><th>Client</th><th>Slack channel</th><th>Status</th><th>Action</th></tr></thead>
+                <tbody>{{CLIENT_ROWS}}</tbody>
+              </table>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+  </body>
+</html>

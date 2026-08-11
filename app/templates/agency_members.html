@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Agency members · Max</title>
+    <link rel="stylesheet" href="/static/dashboard.css">
+    <style>
+      .member-row { display:grid; grid-template-columns:1.2fr .8fr 1fr 2fr; gap:1rem; align-items:center; padding:1rem; border-bottom:1px solid #e6e9ef; background:#fff; }
+      .member-row > div { display:flex; flex-direction:column; gap:.3rem; }
+      .member-row form { display:flex; gap:.6rem; align-items:end; flex-wrap:wrap; }
+      .member-row label { display:flex; flex-direction:column; gap:.25rem; font-size:.78rem; color:#5d6675; }
+      .member-row input, .member-row select { min-height:2.2rem; border:1px solid #cbd2dc; border-radius:.35rem; padding:.35rem .5rem; }
+      .member-row button { min-height:2.2rem; }
+      .role-badge, .member-status { width:max-content; border-radius:999px; padding:.18rem .5rem; font-size:.75rem; text-transform:capitalize; }
+      .role-owner { background:#e9ddff; color:#5c2b93; }.role-admin { background:#dcecff; color:#17508a; }.role-operator { background:#dff7eb; color:#17633e; }.role-viewer { background:#eef0f3; color:#586273; }
+      .member-status { background:#edf7ef; color:#27643b; }.member-row code { color:#586273; }
+      .member-add { display:grid; grid-template-columns:1.1fr 1fr .8fr 1fr auto; gap:.7rem; align-items:end; padding:1rem; background:#f7f8fb; border:1px solid #e6e9ef; border-radius:.5rem; }
+      .member-add label { display:flex; flex-direction:column; gap:.3rem; font-size:.8rem; color:#5d6675; }
+      .member-add input, .member-add select { min-height:2.4rem; border:1px solid #cbd2dc; border-radius:.35rem; padding:.4rem .5rem; }
+      .secondary { background:#fff; color:#465064; border:1px solid #cbd2dc; }
+      @media (max-width: 1000px) { .member-row { grid-template-columns:1fr 1fr; }.member-row form { grid-column:1 / -1; }.member-add { grid-template-columns:1fr 1fr; } }
+    </style>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to agency members</a>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <a class="brand" href="/dashboard">Max</a>
+        <p class="product-context">Agency operations</p>
+        <nav class="sidebar-nav" aria-label="Workspace navigation">
+          <a class="nav-item" href="/dashboard">Clients</a>
+          <a class="nav-item" href="/dashboard/connections">Connections</a>
+          <a class="nav-item" href="/dashboard/release-readiness">Release readiness</a>
+          <a class="nav-item active" href="/dashboard/agency/members" aria-current="page">Agency members</a>
+          <a class="nav-item" href="/dashboard/tasks/approvals">Task approvals</a>
+          <a class="nav-item" href="/dashboard/notifications">Notifications</a>
+        </nav>
+      </aside>
+      <div class="workspace">
+        <header class="topbar"><span>Access control</span><a href="/docs">API documentation</a></header>
+        <main id="main-content">
+          <section class="page-heading"><div><h1>Agency members</h1><p>Assign least-privilege roles and map Slack identities. Client-channel clearance remains client-scoped.</p></div></section>
+          {{NOTICE}}
+          <section class="summary-strip" aria-label="Member summary"><div><strong>{{MEMBER_COUNT}}</strong><span>members</span></div><div><strong>{{ACTIVE_COUNT}}</strong><span>active</span></div></section>
+          <section aria-labelledby="add-member-title"><h2 id="add-member-title">Add a member</h2>
+            <form class="member-add" method="post" action="/dashboard/agency/members">
+              <label>Email<input name="email" type="email" required placeholder="teammate@agency.com"></label>
+              <label>Display name<input name="display_name" required placeholder="Alex Smith"></label>
+              <label>Role<select name="role"><option value="operator">Operator</option><option value="admin">Admin</option><option value="viewer">Viewer</option><option value="owner">Owner</option></select></label>
+              <label>Slack user ID<input name="slack_user_id" placeholder="U123…"></label>
+              <button type="submit">Add member</button>
+            </form>
+          </section>
+          <section class="client-directory" aria-labelledby="member-list-title"><header class="directory-heading"><div><h2 id="member-list-title">Member directory</h2><p>At least one active owner must remain.</p></div></header>
+            <div class="member-row" aria-hidden="true"><strong>Member</strong><strong>Role / status</strong><strong>Slack mapping</strong><strong>Manage</strong></div>
+            {{MEMBER_ROWS}}
+          </section>
+        </main>
+      </div>
+    </div>
+  </body>
+</html>

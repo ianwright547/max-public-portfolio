@@ -1,0 +1,25 @@
+name: Run Max scheduled jobs
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  run-due-jobs:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Run due jobs
+        env:
+          MAX_JOB_RUNNER_URL: ${{ secrets.MAX_JOB_RUNNER_URL }}
+          MAX_JOB_RUNNER_SECRET: ${{ secrets.MAX_JOB_RUNNER_SECRET }}
+        run: |
+          test -n "$MAX_JOB_RUNNER_URL"
+          test -n "$MAX_JOB_RUNNER_SECRET"
+          curl --fail-with-body --silent --show-error \
+            --request POST "$MAX_JOB_RUNNER_URL" \
+            --header "X-Max-Job-Secret: $MAX_JOB_RUNNER_SECRET"

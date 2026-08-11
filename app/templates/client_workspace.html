@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{CLIENT_NAME}} · Max</title>
+    <meta name="description" content="Review one client's onboarding, proposed profile, and official profile.">
+    <link rel="stylesheet" href="/static/dashboard.css">
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to client workspace</a>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <a class="brand" href="/dashboard">Max</a>
+        <p class="product-context">Agency operations</p>
+        <nav class="sidebar-nav" aria-label="Workspace navigation">
+          <p class="nav-label">Onboarding</p>
+          <a class="nav-item" href="/dashboard">Clients</a>
+          <a class="nav-item" href="/dashboard/onboarding">New client</a>
+          <a class="nav-item" href="/dashboard/metrics">Overall metrics</a>
+          <p class="nav-label secondary-label">System</p>
+          <a class="nav-item" href="/dashboard/connections">Connections</a>
+          <a class="nav-item" href="/dashboard/tasks/approvals">Task approvals</a>
+          <a class="nav-item" href="/dashboard/notifications">Notifications</a>
+          <a class="nav-item" href="/dashboard/slack">Slack</a>
+        </nav>
+        <p class="environment">Client workspace<br><span>History preserved</span></p>
+      </aside>
+      <div class="workspace">
+        <header class="topbar"><span>Client record</span><a href="/dashboard">Back to clients</a></header>
+        <main id="main-content" class="client-workspace">
+          <section class="workspace-heading">
+            <div>
+              <p class="eyebrow">Client</p>
+              <h1>{{CLIENT_NAME}}</h1>
+              <p>Started {{SERVICE_START_DATE}} · {{CLIENT_ID}}</p>
+            </div>
+            <div class="workspace-status">{{PROFILE_STATUS}}</div>
+          </section>
+          <nav class="workspace-tabs" aria-label="Client record sections">
+            {{WORKSPACE_TABS}}
+          </nav>
+          {{NOTICE}}
+          {{WORKSPACE_CONTENT}}
+        </main>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Execution verification · Max</title>
+    <meta name="description" content="Review completed execution evidence before resolving a finding.">
+    <link rel="stylesheet" href="/static/dashboard.css">
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to verification reviews</a>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <a class="brand" href="/dashboard">Max</a>
+        <p class="product-context">Agency operations</p>
+        <nav class="sidebar-nav" aria-label="Workspace navigation">
+          <p class="nav-label">Workspace</p>
+          <a class="nav-item" href="/dashboard">All clients</a>
+          <a class="nav-item" href="/dashboard/metrics">Overall metrics</a>
+          <a class="nav-item" href="/dashboard/tasks/approvals">Task approvals</a>
+          <a class="nav-item" href="/dashboard/fulfillment">Fulfillment</a>
+          <a class="nav-item active" href="/dashboard/verifications" aria-current="page">Verification</a>
+          <a class="nav-item" href="/dashboard/notifications">Notifications</a>
+          <p class="nav-label secondary-label">System</p>
+          <a class="nav-item" href="/docs">API explorer</a>
+        </nav>
+        <p class="environment">Human review<br><span>Evidence required</span></p>
+      </aside>
+      <div class="workspace">
+        <header class="topbar"><span>Execution verification</span><a href="/dashboard/fulfillment">Simulator</a></header>
+        <main id="main-content" class="verification-page">
+          <section class="page-heading"><div><h1>Verify completed work</h1><p>Compare the approved request with the recorded result before resolving its finding.</p></div><span class="pending-total">{{PENDING_COUNT}} pending</span></section>
+          <aside class="verification-boundary"><strong>Completion is not verification.</strong><span>Only a verified decision resolves the finding. Failed checks return the task for correction while preserving this review.</span></aside>
+          {{NOTICE}}
+          <section class="pending-verifications" aria-labelledby="pending-title"><h2 id="pending-title">Waiting for review</h2>{{PENDING_REVIEWS}}</section>
+          <section class="verification-history-list" aria-labelledby="history-title"><h2 id="history-title">Decision history</h2>{{REVIEW_HISTORY}}</section>
+        </main>
+      </div>
+    </div>
+  </body>
+</html>

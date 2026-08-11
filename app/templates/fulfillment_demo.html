@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Fulfillment · Max</title>
+    <meta name="description" content="Prepare and track real Codex fulfillment handoffs with separate verification.">
+    <link rel="stylesheet" href="/static/dashboard.css">
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to fulfillment</a>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <a class="brand" href="/dashboard">Max</a>
+        <p class="product-context">Agency operations</p>
+        <nav class="sidebar-nav" aria-label="Workspace navigation">
+          <p class="nav-label">Workspace</p>
+          <a class="nav-item" href="/dashboard">All clients</a>
+          <a class="nav-item" href="/dashboard/metrics">Overall metrics</a>
+          <a class="nav-item" href="/dashboard/tasks/approvals">Task approvals</a>
+          <a class="nav-item active" href="/dashboard/fulfillment" aria-current="page">Fulfillment</a>
+          <a class="nav-item" href="/dashboard/verifications">Verification</a>
+          <a class="nav-item" href="/dashboard/notifications">Notifications</a>
+          <p class="nav-label secondary-label">System</p>
+          <a class="nav-item" href="/docs">API explorer</a>
+        </nav>
+        <p class="environment">Codex handoffs<br><span>Verification required</span></p>
+      </aside>
+      <div class="workspace">
+        <header class="topbar"><span>Fulfillment queue</span><a href="/dashboard/tasks/approvals">Task approvals</a></header>
+        <main id="main-content" class="fulfillment-page">
+          <section class="page-heading"><div><h1>Codex fulfillment</h1><p>Copy a complete zero-model-cost packet into Codex, then return structured evidence for independent verification.</p></div><span class="pending-total">{{PACKET_COUNT}} packets</span></section>
+          <aside class="simulation-boundary"><strong>A handoff starts work—it does not verify it.</strong><span>Max keeps client, repository, file, approval, and evidence scope attached to every packet.</span></aside>
+          {{NOTICE}}
+          <section class="execution-list" aria-labelledby="packets-title"><h2 id="packets-title">Codex handoff queue</h2>{{PACKETS}}</section>
+          <details class="workspace-note"><summary>Development simulator</summary><p>Nothing here changes a real client system. The simulator remains available only for testing state transitions.</p><section class="simulation-list" aria-labelledby="eligible-title"><h2 id="eligible-title">Approved and ready tasks · {{ELIGIBLE_COUNT}}</h2>{{TASKS}}</section><section class="execution-list" aria-labelledby="results-title"><h2 id="results-title">Recent simulation results</h2>{{EXECUTIONS}}</section></details>
+        </main>
+      </div>
+    </div>
+  </body>
+</html>

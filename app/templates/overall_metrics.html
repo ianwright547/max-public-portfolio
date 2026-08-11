@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Overall metrics · Max</title>
+    <link rel="stylesheet" href="/static/dashboard.css">
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to overall metrics</a>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <a class="brand" href="/dashboard">Max</a><p class="product-context">Agency operations</p>
+        <nav class="sidebar-nav" aria-label="Workspace navigation">
+          <p class="nav-label">Workspace</p>
+          <a class="nav-item" href="/dashboard?linked_only=true">All clients</a>
+          <a class="nav-item active" href="/dashboard/metrics" aria-current="page">Overall metrics</a>
+          <a class="nav-item" href="/dashboard/tasks/approvals">Task approvals</a>
+          <p class="nav-label secondary-label">System</p><a class="nav-item" href="/docs">API explorer</a>
+        </nav>
+        <p class="environment">Website analytics<br><span>Aggregate data only</span></p>
+      </aside>
+      <div class="workspace">
+        <header class="topbar"><span>Performance</span><a href="/dashboard?linked_only=true">Back to clients</a></header>
+        <main id="main-content" class="overall-metrics-page">
+          <section class="page-heading"><div><h1>Overall metrics</h1><p>{{SUBTITLE}}</p></div><span>{{PERIOD}}</span></section>
+          <section class="overall-controls">
+            <form method="get" action="/dashboard/metrics">
+              <label>Client<select name="client_id">{{CLIENT_OPTIONS}}</select></label>
+              <label>Window<select name="window_days">{{WINDOW_OPTIONS}}</select></label>
+              <button type="submit">View</button>
+            </form>
+            <form method="post" action="/dashboard/metrics/sync"><input type="hidden" name="window_days" value="{{WINDOW_DAYS}}"><button type="submit">Sync tracker data</button></form>
+          </section>
+          {{NOTICE}}
+          <section class="overall-kpis" aria-label="Website analytics summary">
+            <article><span>{{VISITORS_LABEL}}</span><strong>{{VISITORS}}</strong><small>Unique website visitors</small></article>
+            <article><span>{{PAGEVIEWS_LABEL}}</span><strong>{{PAGEVIEWS}}</strong><small>Pages viewed</small></article>
+            <article><span>{{CALLS_LABEL}}</span><strong>{{CALLS}}</strong><small>Phone-link clicks</small></article>
+            <article><span>{{FORMS_LABEL}}</span><strong>{{FORMS}}</strong><small>Tracked submissions</small></article>
+          </section>
+          <p class="portfolio-totals">{{TOTALS}}</p>
+          <section class="overall-table" aria-labelledby="client-performance-title">
+            <header><h2 id="client-performance-title">Client performance</h2><p>Visitors are visualized; exact values remain in the columns.</p></header>
+            <div class="overall-table-head"><span>Client</span><span>Visitors</span><span></span><span>Views</span><span>Calls</span><span>Forms</span><span>Conversion</span></div>
+            {{CLIENT_ROWS}}
+          </section>
+          <aside class="health-boundary"><strong>Source boundary</strong><span>Call clicks are phone-link clicks, not confirmed connected calls. No raw visitor identities are imported.</span></aside>
+        </main>
+      </div>
+    </div>
+  </body>
+</html>

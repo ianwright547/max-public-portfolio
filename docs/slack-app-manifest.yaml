@@ -1,0 +1,33 @@
+_metadata:
+  major_version: 1
+  minor_version: 1
+display_information:
+  name: Max
+  description: Answers owner questions and runs approval-gated Max operations in verified agency channels.
+  background_color: "#111827"
+features:
+  bot_user:
+    display_name: Max
+    always_online: false
+oauth_config:
+  scopes:
+    bot:
+      - app_mentions:read
+      - chat:write
+      - channels:manage
+      - channels:read
+      - groups:read
+      - im:history
+      - users:read
+settings:
+  event_subscriptions:
+    request_url: https://your-deployment.example.com/slack/events
+    bot_events:
+      - app_mention
+      - message.im
+  interactivity:
+    is_enabled: true
+    request_url: https://your-deployment.example.com/slack/actions
+  org_deploy_enabled: false
+  socket_mode_enabled: false
+  token_rotation_enabled: false

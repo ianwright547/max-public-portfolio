@@ -1,0 +1,158 @@
+{
+  "pack": "local-seo-knowledge-pack",
+  "version": "1.1.0",
+  "created": "2026-08-05",
+  "file_count": 24,
+  "files": [
+    {
+      "path": "CHANGELOG.md",
+      "bytes": 1051,
+      "lines": 43,
+      "sha256": "619abb8edbe2576594901f28b0183c9a04131a644bb669cf758bea602e1d51e7"
+    },
+    {
+      "path": "README.md",
+      "bytes": 4701,
+      "lines": 148,
+      "sha256": "4969a16e12c8e3403cd8923759d7538d5e370ae20fceb8662ab5b6e28569b39d"
+    },
+    {
+      "path": "checklists/local-seo/local-seo-audit-checklist.md",
+      "bytes": 14098,
+      "lines": 447,
+      "sha256": "6984218db94789983a9d647e2e2570faf755e309f9a854ed5fde2ee0e9af3f3e"
+    },
+    {
+      "path": "checklists/local-seo/local-seo-publication-checklist.md",
+      "bytes": 4380,
+      "lines": 163,
+      "sha256": "8137e20fd74c55d6f2a0a656f5159b39cc72ef0f2efe9ec741ec3219422e44fb"
+    },
+    {
+      "path": "skills/local-competitor-analysis/SKILL.md",
+      "bytes": 2895,
+      "lines": 110,
+      "sha256": "30ca0341efbd6a4b73d60ebd3c51f3845af77c7fbd80810f0441516cfc62e587"
+    },
+    {
+      "path": "skills/local-content-brief/SKILL.md",
+      "bytes": 2134,
+      "lines": 78,
+      "sha256": "25df30348a4445a9c65cbeef3f97da83ffcb0af15c2fb1e4ddddf99f4e69d28d"
+    },
+    {
+      "path": "skills/local-seo/SKILL.md",
+      "bytes": 8309,
+      "lines": 255,
+      "sha256": "d94cc93054516c5144a2e8972c673b3931cb4fc636bddc24b2eefead83266873"
+    },
+    {
+      "path": "skills/local-website-audit/SKILL.md",
+      "bytes": 2991,
+      "lines": 123,
+      "sha256": "43d0c3ceb64aed47fa9b5c6d60519c0f5dd1a4d38d093f70b61789cd2e0a22dc"
+    },
+    {
+      "path": "skills/multi-location-seo/SKILL.md",
+      "bytes": 1942,
+      "lines": 68,
+      "sha256": "2f206171c93281690b892704f2126a362672c162260ef39fe66999dc32684c99"
+    },
+    {
+      "path": "sops/local-seo/01-local-seo-research-and-strategy.md",
+      "bytes": 10350,
+      "lines": 362,
+      "sha256": "41ad145c4421e7c0b5f991adeb179738f75961a9f431f8fde53894cc8c167c7c"
+    },
+    {
+      "path": "sops/local-seo/02-google-business-profile.md",
+      "bytes": 9645,
+      "lines": 353,
+      "sha256": "835e7e57d4cb25f5e4fcdec20dc9b56273e01c5366caa6e0008055e0db7e22cc"
+    },
+    {
+      "path": "sops/local-seo/03-local-pages-and-content.md",
+      "bytes": 10217,
+      "lines": 439,
+      "sha256": "6a26e9a622c7c48234ade34b53bbd7fd73628992d580cb14bee5dc4eb3a9a334"
+    },
+    {
+      "path": "sops/local-seo/04-local-authority-reviews-and-citations.md",
+      "bytes": 8177,
+      "lines": 338,
+      "sha256": "c69a726acef315e251ffa84051d17500976e77591f18b0e9ede70896916be6e3"
+    },
+    {
+      "path": "sops/local-seo/05-technical-local-seo.md",
+      "bytes": 7452,
+      "lines": 281,
+      "sha256": "40f7bdc016794df4e7f61f1f96bd220e09658dbf850ca4ce26827a5b27510a90"
+    },
+    {
+      "path": "sops/local-seo/06-local-seo-measurement-and-reporting.md",
+      "bytes": 8453,
+      "lines": 383,
+      "sha256": "4cdac8b2038a95123fa68c925564cc621f7b043dff98aacc8b53f2fd145441a7"
+    },
+    {
+      "path": "sops/local-seo/07-local-website-audit.md",
+      "bytes": 11894,
+      "lines": 590,
+      "sha256": "ffc27eb32f01ab8194b4a821752674f6b792a08478c5940100f3cd5b8c689b23"
+    },
+    {
+      "path": "sops/local-seo/08-local-competitor-analysis.md",
+      "bytes": 7747,
+      "lines": 357,
+      "sha256": "0f2241e16d9de0eb9958d7a7ed75f65758b9f085dbe3e985e565328052b2fe41"
+    },
+    {
+      "path": "sops/local-seo/09-multi-location-local-seo.md",
+      "bytes": 9330,
+      "lines": 426,
+      "sha256": "74418cab05a828d8d801cc15aec1728aa212d03743c1d24726c647f9baf40e90"
+    },
+    {
+      "path": "sources/local-seo-source-register.md",
+      "bytes": 5846,
+      "lines": 255,
+      "sha256": "d1fe1881173763829647b3cfebf4a872c61661857eb4a2a648258ad08df8bacb"
+    },
+    {
+      "path": "templates/local-seo/local-competitor-analysis-report.md",
+      "bytes": 2686,
+      "lines": 144,
+      "sha256": "9e7ae8adfb74df2ac944b88fa092b0a402389e22afaa7216344f70f8acd96743"
+    },
+    {
+      "path": "templates/local-seo/local-content-brief.md",
+      "bytes": 4683,
+      "lines": 263,
+      "sha256": "55cd5c0f913f27ec3da007d71257675fca0cc4344784e1a31e47f47332132146"
+    },
+    {
+      "path": "templates/local-seo/local-seo-client-brief.md",
+      "bytes": 3654,
+      "lines": 200,
+      "sha256": "626ec71bd305aef8a094fdf4e61fe93f89d576bd298353ab6acdf37abc62b73b"
+    },
+    {
+      "path": "templates/local-seo/local-seo-report-template.md",
+      "bytes": 5051,
+      "lines": 279,
+      "sha256": "fd556097135e2c71c0db8af3d4d9b3dee3d77b407e2ac640149e4c4b2fef5748"
+    },
+    {
+      "path": "templates/local-seo/local-website-audit-report.md",
+      "bytes": 4725,
+      "lines": 287,
+      "sha256": "b112ed6f113fd277ebb1ee861a0462b8926d9706699809b104eb0a3d1b68077f"
+    }
+  ],
+  "validation": {
+    "em_dash_count": 0,
+    "en_dash_count": 0,
+    "prohibited_word_fragment_count": 0,
+    "issues": []
+  }
+}

@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Health · {{BUSINESS_NAME}} · Max</title>
+    <meta name="description" content="Run an explainable rules-based client health check.">
+    <link rel="stylesheet" href="/static/dashboard.css">
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to health check</a>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <a class="brand" href="/dashboard">Max</a>
+        <p class="product-context">Agency operations</p>
+        <nav class="sidebar-nav" aria-label="Workspace navigation">
+          <p class="nav-label">Client</p>
+          <a class="nav-item" href="/dashboard">All clients</a>
+          <a class="nav-item" href="/dashboard/metrics">Overall metrics</a>
+          <a class="nav-item" href="/dashboard/clients/{{CLIENT_ID}}/metrics">Metrics</a>
+          <a class="nav-item active" href="/dashboard/clients/{{CLIENT_ID}}/health" aria-current="page">Health</a>
+          <a class="nav-item" href="/dashboard/clients/{{CLIENT_ID}}/reports">Reports</a>
+          <a class="nav-item" href="/dashboard/tasks/approvals">Task approvals</a>
+          <p class="nav-label secondary-label">System</p>
+          <a class="nav-item" href="/docs">API explorer</a>
+        </nav>
+        <p class="environment">{{CLIENT_ID}}<br><span>Local · SQLite</span></p>
+      </aside>
+
+      <div class="workspace">
+        <header class="topbar"><span>{{BUSINESS_NAME}}</span><a href="/dashboard">Back to clients</a></header>
+        <main id="main-content" class="health-page">
+          <section class="page-heading">
+            <div><h1>Client health</h1><p>Explainable checks using only saved and manually observed evidence.</p></div>
+          </section>
+          {{NOTICE}}
+
+          <section class="health-overview status-{{STATUS_CLASS}}" aria-label="Latest client health">
+            <div><span class="health-eyebrow">Current status</span><h2>{{STATUS_LABEL}}</h2><p>{{SUMMARY}}</p></div>
+            <dl><div><dt>Open findings</dt><dd>{{FINDING_COUNT}}</dd></div><div><dt>Last checked</dt><dd>{{CHECKED_AT}}</dd></div></dl>
+          </section>
+
+          <section class="health-runner" aria-labelledby="run-check-title">
+            <div><h2 id="run-check-title">Run a check</h2><p>Max will read the latest intake, integrations, and metric history. It will not contact the website or create work.</p></div>
+            <form method="post" action="/dashboard/clients/{{CLIENT_ID}}/health/run">
+              <label>Website observation
+                <select name="website_status" required>
+                  <option value="unknown">Not checked</option>
+                  <option value="available">Available</option>
+                  <option value="unavailable">Unavailable</option>
+                </select>
+              </label>
+              <button type="submit">Run rules-based check</button>
+            </form>
+          </section>
+
+          <section class="finding-list" aria-labelledby="findings-title">
+            <header><div><h2 id="findings-title">Open findings</h2><p>Evidence comes before recommendations. Checks never create tasks automatically.</p></div></header>
+            {{FINDINGS}}
+          </section>
+
+          <aside class="health-boundary"><strong>Safety boundary</strong><span>This phase detects and explains. It does not execute work, contact Google, or resolve findings.</span></aside>
+        </main>
+      </div>
+    </div>
+  </body>
+</html>
