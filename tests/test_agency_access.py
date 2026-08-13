@@ -100,6 +100,9 @@ def test_operator_member_cannot_manage_members_when_authenticated(monkeypatch) -
     monkeypatch.setenv("AUTH_SECRET", "test-auth-secret-with-enough-entropy")
     monkeypatch.setenv("MAX_ALLOWED_GOOGLE_EMAILS", "owner@example.com,operator@example.com")
     monkeypatch.setenv("MAX_REQUIRE_AUTH", "true")
+    monkeypatch.setenv("GOOGLE_CLIENT_ID", "portfolio-client-id")
+    monkeypatch.setenv("GOOGLE_CLIENT_SECRET", "portfolio-client-secret")
+    monkeypatch.setenv("GOOGLE_REDIRECT_URI", "http://testserver/google/oauth/callback")
     with SessionLocal() as database:
         member = database.scalar(
             select(models.AgencyMember).where(

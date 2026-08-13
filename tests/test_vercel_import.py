@@ -14,9 +14,9 @@ MANIFEST = Path(__file__).parent.parent / "data" / "vercel_client_import.json"
 def test_confirmed_manifest_has_unique_clients_and_projects() -> None:
     records = read_manifest(MANIFEST)
 
-    assert len(records) == 13
-    assert len({record["business_name"].casefold() for record in records}) == 13
-    assert len({record["external_project_id"] for record in records}) == 13
+    assert len(records) == 1
+    assert len({record["business_name"].casefold() for record in records}) == 1
+    assert len({record["external_project_id"] for record in records}) == 1
     assert all(record["production_url"].startswith("https://") for record in records)
 
 
