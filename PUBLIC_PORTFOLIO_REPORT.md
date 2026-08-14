@@ -18,6 +18,7 @@ The system can assemble client updates from website observations, Google Search 
 - Local SEO audits, progress reports, and 30/60/90-day plans
 - Tangible daily fulfillment tasks with owners, dependencies, and expected outcomes
 - Slack and dashboard workflows for asking for reports or requesting work conversationally
+- Explicitly named owner-DM commands (for example, removing one client) with ambiguity-safe client resolution
 - Evidence-backed recommendations with clear gaps and “what is needed to continue” messages
 - Codex handoff packets for website, content, technical SEO, and GBP work
 - Optional provider workflows for website changes, GitHub/Vercel deployments, and GBP publishing
