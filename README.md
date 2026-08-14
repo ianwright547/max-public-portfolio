@@ -51,7 +51,7 @@ The public copy also labels integrations as optional and shows what the system d
 
 ## Verification snapshot
 
-The private working project has an automated test suite, migration checks, compile checks, and deployment smoke-test contracts. The sanitized public checkout also bootstraps a test schema and currently passes all 408 tests with dummy configuration. This remains a review artifact, not a live performance guarantee.
+The private working project has an automated test suite, migration checks, compile checks, and deployment smoke-test contracts. The sanitized public checkout also bootstraps a test schema and currently passes all 409 tests with dummy configuration. This remains a review artifact, not a live performance guarantee.
 
 ## Suggested recruiter review path
 
