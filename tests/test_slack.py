@@ -214,6 +214,41 @@ def test_owner_can_control_max_from_a_direct_message(monkeypatch) -> None:
     assert "Slack controls available now" in adapter.messages[-1]["text"]
 
 
+def test_owner_can_remove_an_explicitly_named_client_from_a_direct_message(monkeypatch) -> None:
+    from fastapi.testclient import TestClient
+
+    from app.main import app
+
+    adapter = FakeSlackAdapter()
+    connect_fake_slack(monkeypatch, adapter)
+    monkeypatch.setenv("SLACK_SIGNING_SECRET", "event-secret")
+    with TestClient(app) as api:
+        client_id = create_client(api, f"DM Delete Client {uuid4().hex[:8]}")
+        connection = api.post(f"/clients/{client_id}/slack-channel").json()["connection"]
+        response = post_signed_slack_event(
+            api,
+            {
+                "type": "event_callback",
+                "team_id": adapter.workspace.id,
+                "event_id": f"Ev_dm_delete_{uuid4().hex}",
+                "event": {
+                    "type": "message",
+                    "channel_type": "im",
+                    "user": "U_OWNER",
+                    "channel": "D_OWNER_MAX",
+                    "ts": "1700000000.000011",
+                    "text": f"remove {api.get(f'/clients/{client_id}').json()['business_name']} client",
+                },
+            },
+        )
+        saved = api.get(f"/clients/{client_id}").json()
+
+    assert response.status_code == 200
+    assert saved["status"] == "archived"
+    assert connection["channel_id"] in adapter.archived_channel_ids
+    assert "removed from active clients" in adapter.messages[-1]["text"]
+
+
 def test_non_owner_direct_message_is_not_processed(monkeypatch) -> None:
     from fastapi.testclient import TestClient
 

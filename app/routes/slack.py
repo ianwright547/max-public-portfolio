@@ -43,6 +43,27 @@ TEMPLATE_PATH = Path(__file__).parent.parent / "templates" / "slack_setup.html"
 logger = logging.getLogger(__name__)
 
 
+def _resolve_explicit_client_reference(database: Session, question: str) -> Optional[models.Client]:
+    """Resolve one unambiguous active client named in an owner DM.
+
+    A client-channel mapping is the normal scope boundary. Owner DMs are the
+    deliberate exception for commands such as “remove Demo Auto Repair”; only
+    an exact business-name or client-ID mention can widen that scope, and an
+    ambiguous match is left unresolved rather than guessed.
+    """
+    normalized = question.casefold()
+    candidates: list[models.Client] = []
+    for candidate in database.scalars(
+        select(models.Client).where(models.Client.archived_at.is_(None))
+    ):
+        business_name = candidate.business_name.casefold().strip()
+        if (business_name and business_name in normalized) or candidate.id.casefold() in normalized:
+            candidates.append(candidate)
+    if len(candidates) != 1:
+        return None
+    return candidates[0]
+
+
 def slack_action_failure_message(error: Exception, action_type: str) -> str:
     """Explain safe action failures in Slack without sending users to an admin screen."""
     if isinstance(error, SlackIntegrationError):
@@ -262,6 +283,17 @@ async def slack_events(request: Request, database: Session = Depends(get_databas
             channel_id,
             event_id,
         )
+    # A configured owner may name exactly one active client from a DM. This
+    # keeps direct commands useful without allowing an arbitrary DM to operate
+    # on a guessed or ambiguous client.
+    if client is None and is_owner_dm and legacy_owner:
+        client = _resolve_explicit_client_reference(database, question)
+        if client is not None:
+            connection = database.scalar(
+                select(models.SlackChannelConnection).where(
+                    models.SlackChannelConnection.client_id == client.id
+                )
+            )
     if not question:
         answer_text = "Mention me with a question, for example: `@Max what should we prioritize this week?`"
         answer = None
