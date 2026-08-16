@@ -43,6 +43,22 @@ def test_simple_update_uses_saved_data_without_live_refresh(monkeypatch) -> None
     assert "30 days" not in text
 
 
+def test_portfolio_update_discloses_the_active_client_cap(monkeypatch) -> None:
+    from fastapi.testclient import TestClient
+    from app.main import app
+
+    monkeypatch.setattr(client_update_service, "MAX_PORTFOLIO_CLIENTS", 1)
+    with TestClient(app) as api:
+        _client(api, "Capped Portfolio One")
+        _client(api, "Capped Portfolio Two")
+        with SessionLocal() as database:
+            report = client_update_service.generate_portfolio_update(database, mode="simple")
+
+    assert len(report.clients) == 1
+    assert report.portfolio_notes
+    assert "showing 1 of" in report.portfolio_notes[0]
+
+
 def test_in_depth_update_reports_fresh_gaps_90_day_actions_and_access_needs(monkeypatch) -> None:
     from fastapi.testclient import TestClient
     from app.main import app

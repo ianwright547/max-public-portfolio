@@ -15,7 +15,7 @@ from urllib.error import URLError
 
 import httpx
 from fastapi import HTTPException
-from sqlalchemy import select
+from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
 from app import models, schemas
@@ -656,9 +656,14 @@ def generate_portfolio_update(
 ) -> PortfolioUpdate:
     if mode not in {"simple", "in_depth"}:
         raise ValueError("client_update_mode_invalid")
+    notes: list[str] = []
+    total_active_clients = None
     if client is not None:
         clients = [client]
     else:
+        total_active_clients = database.scalar(
+            select(func.count()).select_from(models.Client).where(models.Client.archived_at.is_(None))
+        ) or 0
         clients = list(
             database.scalars(
                 select(models.Client)
@@ -667,12 +672,16 @@ def generate_portfolio_update(
                 .limit(MAX_PORTFOLIO_CLIENTS)
             )
         )
+        if total_active_clients > MAX_PORTFOLIO_CLIENTS:
+            notes.append(
+                f"Portfolio scope is capped at {MAX_PORTFOLIO_CLIENTS} clients; "
+                f"showing {len(clients)} of {total_active_clients}. Request a specific client or segment for the remainder."
+            )
     if mode == "in_depth":
         from app.subscription_service import require_fulfillment_entitlement
 
         for item in clients:
             require_fulfillment_entitlement(database, item.id)
-    notes: list[str] = []
     if mode == "in_depth":
         from app.routes.website_metrics import sync_metrics
 
