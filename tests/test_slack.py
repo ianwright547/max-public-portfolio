@@ -279,6 +279,43 @@ def test_owner_dm_requests_a_client_reference_before_destructive_change(monkeypa
     assert "Which client should I change?" in adapter.messages[-1]["text"]
 
 
+def test_owner_dm_can_request_a_simple_update_for_all_clients(monkeypatch) -> None:
+    from fastapi.testclient import TestClient
+
+    from app.main import app
+
+    adapter = FakeSlackAdapter()
+    connect_fake_slack(monkeypatch, adapter)
+    monkeypatch.setenv("SLACK_SIGNING_SECRET", "event-secret")
+    from app import client_update_service
+    monkeypatch.setattr(client_update_service, "MAX_PORTFOLIO_CLIENTS", 10_000)
+    with TestClient(app) as api:
+        first_name = f"Portfolio Update One {uuid4().hex[:8]}"
+        second_name = f"Portfolio Update Two {uuid4().hex[:8]}"
+        create_client(api, first_name)
+        create_client(api, second_name)
+        response = post_signed_slack_event(
+            api,
+            {
+                "type": "event_callback",
+                "team_id": adapter.workspace.id,
+                "event_id": f"Ev_dm_portfolio_{uuid4().hex}",
+                "event": {
+                    "type": "message",
+                    "channel_type": "im",
+                    "user": "U_OWNER",
+                    "channel": "D_OWNER_MAX",
+                    "ts": "1700000000.000013",
+                    "text": "give me a simple update on all clients",
+                },
+            },
+        )
+
+    assert response.status_code == 200
+    assert first_name in adapter.messages[-1]["text"]
+    assert second_name in adapter.messages[-1]["text"]
+
+
 def test_non_owner_direct_message_is_not_processed(monkeypatch) -> None:
     from fastapi.testclient import TestClient
 
