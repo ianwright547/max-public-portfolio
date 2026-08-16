@@ -6,6 +6,7 @@ import hmac
 import json
 import logging
 import os
+import re
 from html import escape
 from pathlib import Path
 from typing import Optional
@@ -276,6 +277,7 @@ async def slack_events(request: Request, database: Session = Depends(get_databas
     action_result = None
     action_interpretation = None
     intent_needs_clarification = False
+    missing_client_reference = False
     if question != extracted_question:
         logger.warning(
             "slack_app_mention status=credential_redacted workspace=%s channel=%s event=%s",
@@ -294,6 +296,10 @@ async def slack_events(request: Request, database: Session = Depends(get_databas
                     models.SlackChannelConnection.client_id == client.id
                 )
             )
+        elif re.search(r"\b(?:delete|remove|archive|update)\b", question, flags=re.IGNORECASE) and re.search(
+            r"\bclient\b", question, flags=re.IGNORECASE
+        ):
+            missing_client_reference = True
     if not question:
         answer_text = "Mention me with a question, for example: `@Max what should we prioritize this week?`"
         answer = None
@@ -306,7 +312,7 @@ async def slack_events(request: Request, database: Session = Depends(get_databas
                 question,
                 has_mapped_client=client is not None,
             )
-            if client is not None or member_can_act
+            if not missing_client_reference and (client is not None or member_can_act)
             else None
         )
         if owner_action is None and slack_conversation_service.likely_action_request(question):
@@ -359,7 +365,13 @@ async def slack_events(request: Request, database: Session = Depends(get_databas
                         )
             except ai_cost_service.AIBudgetExceeded:
                 action_interpretation = None
-        if owner_action is not None:
+        if missing_client_reference:
+            answer = None
+            answer_text = (
+                "Which client should I change? Include the exact client name or ID, "
+                "or ask from that client's Slack channel so I can act safely."
+            )
+        elif owner_action is not None:
             try:
                 action_result = slack_action_service.apply_owner_action(
                     database,

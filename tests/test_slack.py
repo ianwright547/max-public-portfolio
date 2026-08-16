@@ -249,6 +249,36 @@ def test_owner_can_remove_an_explicitly_named_client_from_a_direct_message(monke
     assert "removed from active clients" in adapter.messages[-1]["text"]
 
 
+def test_owner_dm_requests_a_client_reference_before_destructive_change(monkeypatch) -> None:
+    from fastapi.testclient import TestClient
+
+    from app.main import app
+
+    adapter = FakeSlackAdapter()
+    connect_fake_slack(monkeypatch, adapter)
+    monkeypatch.setenv("SLACK_SIGNING_SECRET", "event-secret")
+    with TestClient(app) as api:
+        response = post_signed_slack_event(
+            api,
+            {
+                "type": "event_callback",
+                "team_id": adapter.workspace.id,
+                "event_id": f"Ev_dm_delete_missing_{uuid4().hex}",
+                "event": {
+                    "type": "message",
+                    "channel_type": "im",
+                    "user": "U_OWNER",
+                    "channel": "D_OWNER_MAX",
+                    "ts": "1700000000.000012",
+                    "text": "delete a client",
+                },
+            },
+        )
+
+    assert response.status_code == 200
+    assert "Which client should I change?" in adapter.messages[-1]["text"]
+
+
 def test_non_owner_direct_message_is_not_processed(monkeypatch) -> None:
     from fastapi.testclient import TestClient
 
