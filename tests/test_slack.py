@@ -1020,7 +1020,7 @@ def test_slack_redacts_credentials_before_ai_and_audit(monkeypatch) -> None:
                     "type": "app_mention",
                     "user": "U_OWNER",
                     "channel": channel.id,
-                    "text": "<@U_BOT> check token xoxb-1234567890-secretvalue",
+                    "text": "<@U_BOT> check api_key=DEMO_SLACK_KEY",
                 },
             },
         )
@@ -1033,8 +1033,8 @@ def test_slack_redacts_credentials_before_ai_and_audit(monkeypatch) -> None:
             )
 
     assert response.status_code == 200
-    assert captured["question"] == "check token [REDACTED CREDENTIAL]"
-    assert "xoxb-" not in json.dumps(audit.details)
+    assert captured["question"] == "check [REDACTED CREDENTIAL]"
+    assert "DEMO_SLACK_KEY" not in json.dumps(audit.details)
     assert audit.details["question"] == captured["question"]
 
 

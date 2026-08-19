@@ -197,7 +197,7 @@ def test_credentials_are_never_saved_as_memory(monkeypatch) -> None:
                     "type": "app_mention",
                     "user": "U_CHANNEL_MEMBER",
                     "channel": connection["channel_id"],
-                    "text": "<@U_BOT> remember that api_key=sk-proj-abcdefghijklmnop123456",
+                    "text": "<@U_BOT> remember that api_key=DEMO_OPENAI_KEY",
                 },
             },
         )

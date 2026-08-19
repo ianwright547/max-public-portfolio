@@ -5,7 +5,7 @@ from scripts import check_slack_provider
 
 
 def _configure(monkeypatch, workspace_id="T_MAX"):
-    monkeypatch.setenv("SLACK_BOT_TOKEN", "xoxb-secret-token")
+    monkeypatch.setenv("SLACK_BOT_TOKEN", "DEMO_SLACK_TOKEN")
     monkeypatch.setenv("SLACK_WORKSPACE_ID", workspace_id)
     monkeypatch.setenv("SLACK_OWNER_USER_IDS", "U_OWNER,U_BACKUP")
 
@@ -27,7 +27,7 @@ def test_probe_verifies_workspace_without_printing_token(monkeypatch, capsys):
     payload = json.loads(output)
     assert payload["status"] == "verified"
     assert payload["owner_ids_configured"] == 2
-    assert "xoxb-secret-token" not in output
+    assert "DEMO_SLACK_TOKEN" not in output
 
 
 def test_probe_rejects_workspace_mismatch(monkeypatch, capsys):
