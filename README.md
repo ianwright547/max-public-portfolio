@@ -61,4 +61,18 @@ The private working project has an automated test suite, migration checks, compi
 3. Review the tests for report provenance, provider failures, approvals, and scheduler protection.
 4. Run the test and migration commands in the project documentation.
 
+## Reproduce locally
+
+```bash
+python3 -m venv .venv
+.venv/bin/pip install -r requirements.txt
+MAX_DATABASE_URL=sqlite:///./max.db .venv/bin/alembic upgrade head
+.venv/bin/pytest -q
+MAX_DATABASE_URL=sqlite:///./max.db .venv/bin/uvicorn app.main:app --reload
+```
+
+Provider credentials are optional for the portfolio walkthrough. The clean test
+checkout creates an isolated test schema and uses demo data; real provider
+tokens must never be added to this repository.
+
 This project is intentionally presented as a learning-driven system-design portfolio: useful enough to demonstrate product thinking, but honest about the provider credentials and operational setup required for production.
