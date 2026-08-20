@@ -68,6 +68,7 @@ python3 -m venv .venv
 .venv/bin/pip install -r requirements.txt
 MAX_DATABASE_URL=sqlite:///./max.db .venv/bin/alembic upgrade head
 .venv/bin/pytest -q
+.venv/bin/python scripts/check_public_portfolio.py
 MAX_DATABASE_URL=sqlite:///./max.db .venv/bin/uvicorn app.main:app --reload
 ```
 
