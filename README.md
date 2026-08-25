@@ -1,4 +1,4 @@
-# Max — public portfolio project report
+# Max — agency operations platform
 
 > Portfolio copy for recruiters and technical reviewers. This document describes the system design and engineering decisions; it is not a claim that this repository is a production SaaS or a live client account.
 
@@ -26,7 +26,7 @@ The system can assemble client updates from website observations, Google Search 
 
 ## Why I built it
 
-I wanted to build something useful for an agency rather than a small demo: a system that reduces the distance between a client request and completed, verifiable fulfillment. The project let me use Claude and Codex as development partners while learning how to design the state, boundaries, failure modes, and audit trail around an AI-enabled workflow.
+I wanted to build something useful for an agency rather than a small demo: a system that reduces the distance between a client request and completed, verifiable fulfillment. The hard part was never the chat surface — it was designing the state, boundaries, failure modes, and audit trail around an AI-enabled workflow, which is where most of the work below went. Built with AI coding tools in the loop.
 
 ## System-design work outside my previous scope
 
@@ -52,11 +52,11 @@ The public copy also labels integrations as optional and shows what the system d
 
 ## Verification snapshot
 
-The private working project has an automated test suite, migration checks, compile checks, and deployment smoke-test contracts. The sanitized public checkout also bootstraps a test schema and currently passes all 413 tests with dummy configuration. This remains a review artifact, not a live performance guarantee.
+The private working project has an automated test suite, migration checks, compile checks, and deployment smoke-test contracts. The sanitized public checkout also bootstraps a test schema and currently passes all 420 tests with dummy configuration. This remains a review artifact, not a live performance guarantee.
 
 ## Suggested recruiter review path
 
-1. Read this report and `README.md`.
+1. Open the live demo at [max-public-portfolio.vercel.app](https://max-public-portfolio.vercel.app) — it runs this codebase against seeded sample data, read-only.
 2. Inspect `app/report_builder.py`, `app/client_provider_verification.py`, and the route/job modules for the evidence and authorization boundaries.
 3. Review the tests for report provenance, provider failures, approvals, and scheduler protection.
 4. Run the test and migration commands in the project documentation.
