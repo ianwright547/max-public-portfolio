@@ -14,6 +14,10 @@ from app.database import SessionLocal
 
 
 EXEMPT_PATHS = {
+    # The root is a static description of the project. It renders no client
+    # data and touches no database, so it stays readable on a public
+    # deployment while every application route below remains fail-closed.
+    "/",
     "/health",
     "/health/details",
     "/health/readiness",

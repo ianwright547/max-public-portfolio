@@ -1,6 +1,7 @@
 """Import aggregate website analytics from the existing public dashboard RPC."""
 
 import json
+import os
 from datetime import date, datetime, time, timedelta, timezone
 from pathlib import Path
 from typing import Callable, Optional
@@ -13,9 +14,11 @@ from app import models
 
 
 SOURCE_NAME = "website_analytics_dashboard"
-RPC_URL = "https://inopcsindiidwfhoglme.supabase.co/rest/v1/rpc/get_analytics_summary"
-# This is the publishable aggregate-only key already shipped in the public dashboard.
-PUBLISHABLE_KEY = "sb_publishable_IxSWeY860PjIvbn1QjvBjA_L2Ns8Qeb"
+# The analytics endpoint and its publishable key are read from the environment so
+# this public copy of the project does not name a real backend. Configure
+# WEBSITE_ANALYTICS_RPC_URL and WEBSITE_ANALYTICS_KEY in a private deployment.
+RPC_URL = os.getenv("WEBSITE_ANALYTICS_RPC_URL", "").strip()
+PUBLISHABLE_KEY = os.getenv("WEBSITE_ANALYTICS_KEY", "").strip()
 MANIFEST = Path(__file__).parent.parent / "data" / "vercel_client_import.json"
 
 
@@ -62,6 +65,14 @@ def count_value(row: dict, field: str) -> int:
 
 
 def fetch_summary(period_start: datetime, period_end: datetime) -> list[dict]:
+    if not RPC_URL or not PUBLISHABLE_KEY:
+        # ValueError is what the sync route and the portfolio report already treat
+        # as an unavailable analytics source, so an unconfigured deployment reports
+        # the access gap instead of aborting the surrounding report.
+        raise ValueError(
+            "website analytics is not configured: set WEBSITE_ANALYTICS_RPC_URL "
+            "and WEBSITE_ANALYTICS_KEY"
+        )
     payload = json.dumps(
         {"p_from": period_start.isoformat(), "p_to": period_end.isoformat()}
     ).encode("utf-8")

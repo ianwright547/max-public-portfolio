@@ -77,7 +77,13 @@ def test_connections_dashboard_hides_secrets_and_shows_client_readiness() -> Non
     assert ".pem" not in response.text
 
 
-def test_browser_root_opens_dashboard() -> None:
+def test_browser_root_describes_the_project_without_client_data() -> None:
+    """The root is a static project description, not an entrance to the workspace.
+
+    A public deployment has no owner session, so sending the root to /dashboard
+    only produced an error page. Serving the description keeps the root useful
+    while every application route stays fail-closed.
+    """
     from fastapi.testclient import TestClient
 
     from app.main import app
@@ -85,8 +91,11 @@ def test_browser_root_opens_dashboard() -> None:
     with TestClient(app) as client:
         response = client.get("/", follow_redirects=False)
 
-    assert response.status_code == 307
-    assert response.headers["location"] == "/dashboard"
+    assert response.status_code == 200
+    assert response.headers["content-type"].startswith("text/html")
+    assert "<h1>Max</h1>" in response.text
+    # The page must never grow a data-backed section.
+    assert "dummy data" in response.text
 
 
 def test_dashboard_keeps_each_clients_onboarding_status_separate() -> None:

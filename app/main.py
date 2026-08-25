@@ -9,7 +9,10 @@ from uuid import uuid4
 from datetime import datetime, timedelta
 import os
 
+from pathlib import Path
+
 from fastapi import FastAPI, Request
+from fastapi.responses import HTMLResponse
 from sqlalchemy import text
 from sqlalchemy import func, select
 from fastapi.staticfiles import StaticFiles
@@ -51,6 +54,21 @@ async def security_headers(request, call_next):
         response.headers.setdefault("Strict-Transport-Security", "max-age=31536000; includeSubDomains")
     response.headers.setdefault("Cache-Control", "no-store")
     return response
+
+
+LANDING_TEMPLATE_PATH = Path(__file__).parent / "templates" / "public_landing.html"
+
+
+@app.get("/", include_in_schema=False)
+def public_landing() -> HTMLResponse:
+    """Describe the project at the browser root.
+
+    The application routes need an owner session and a configured database, so
+    on a public deployment they correctly refuse to serve anything. That left
+    the root as a bare 503. This page explains what the system is and stays
+    entirely static: it reads no database, no provider, and no client record.
+    """
+    return HTMLResponse(LANDING_TEMPLATE_PATH.read_text(encoding="utf-8"))
 
 
 # `@app.get("/health")` means:
