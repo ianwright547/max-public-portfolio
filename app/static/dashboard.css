@@ -294,7 +294,10 @@ h1 {
 .directory-columns,
 .client-row {
   display: grid;
-  grid-template-columns: minmax(14rem, 1.45fr) minmax(14rem, 1fr) minmax(9rem, 0.7fr) 5.5rem;
+  /* The last track holds five record links. A fixed 5.5rem was narrower than
+     their content, and flex-end pushed the overflow back across the action
+     column, so the two columns printed on top of each other. */
+  grid-template-columns: minmax(14rem, 1.45fr) minmax(12rem, 1fr) minmax(9rem, 0.7fr) minmax(12rem, auto);
   gap: 1.25rem;
 }
 
@@ -407,8 +410,9 @@ h1 {
 
 .record-links {
   display: flex;
+  flex-wrap: wrap;
   justify-content: flex-end;
-  gap: 0.6rem;
+  gap: 0.35rem 0.6rem;
 }
 
 .record-links a {
@@ -566,7 +570,7 @@ h1 {
 
   .directory-columns,
   .client-row {
-    grid-template-columns: minmax(11rem, 1.3fr) minmax(11rem, 1fr) minmax(8rem, 0.7fr) 5rem;
+    grid-template-columns: minmax(11rem, 1.3fr) minmax(10rem, 1fr) minmax(8rem, 0.7fr) minmax(11rem, auto);
     gap: 0.7rem;
   }
 }

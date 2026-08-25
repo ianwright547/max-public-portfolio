@@ -12,7 +12,7 @@ import os
 from pathlib import Path
 
 from fastapi import FastAPI, Request
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, RedirectResponse, Response
 from sqlalchemy import text
 from sqlalchemy import func, select
 from fastapi.staticfiles import StaticFiles
@@ -23,13 +23,23 @@ from app.database import SessionLocal
 from app.routes import agency, ai_costs, auth, billing, browser_execution, clients, codex_packets, daily_plans, dashboard, fulfillment, github_repositories, google_business_profile, google_oauth, health_checks, intake, interpretations, jobs, metrics, notifications, onboarding_automation, prompts, reports, search_console, slack, tasks, verifications, website_execution, website_generation, website_metrics, websites
 from app.security import enforce_request_security
 from app.readiness_service import build_readiness
+from app.demo_mode import demo_mode_enabled
+from app.demo_data import seed_demo_data
+from app.auth_service import auth_is_configured
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     # Production schema changes are explicit and signed. Local/test databases
     # retain their convenient create-all bootstrap behavior.
-    if os.getenv("VERCEL_ENV", "").strip().casefold() not in {"production", "preview"}:
+    if demo_mode_enabled():
+        # The demo runs on a throwaway database. Rebuilding and reseeding it on
+        # each cold start is what keeps the public demo self-healing: anything a
+        # visitor could somehow leave behind disappears with the instance.
+        create_database()
+        with SessionLocal() as database:
+            seed_demo_data(database)
+    elif os.getenv("VERCEL_ENV", "").strip().casefold() not in {"production", "preview"}:
         create_database()
     yield
 
@@ -56,18 +66,73 @@ async def security_headers(request, call_next):
     return response
 
 
+DEMO_BANNER = (
+    '<div style="position:sticky;top:0;z-index:99999;display:flex;flex-wrap:wrap;'
+    'gap:8px 16px;align-items:center;justify-content:center;padding:9px 16px;'
+    'background:#312e81;color:#e0e7ff;font:13px/1.5 -apple-system,BlinkMacSystemFont,'
+    '\'Segoe UI\',Helvetica,Arial,sans-serif;text-align:center;">'
+    '<span><strong style="color:#fff;">Live demo &middot; read-only.</strong> '
+    'Every client, metric, and report below is invented sample data. '
+    'Changes are refused.</span>'
+    '<a href="/about" style="color:#fff;text-decoration:underline;">'
+    'About this project</a>'
+    "</div>"
+)
+
+
+@app.middleware("http")
+async def demo_banner(request: Request, call_next):
+    """Mark every rendered page of the public demo as a demo.
+
+    This is applied to the response rather than to each template so no screen
+    can be reached without the label, including pages added later.
+    """
+    response = await call_next(request)
+    if not getattr(request.state, "demo_mode", False):
+        return response
+    if not response.headers.get("content-type", "").startswith("text/html"):
+        return response
+    if getattr(response, "body_iterator", None) is None:
+        return response
+
+    body = b"".join([chunk async for chunk in response.body_iterator])
+    page = body.decode("utf-8", errors="replace")
+    opening = page.find("<body")
+    if opening != -1:
+        insert_at = page.find(">", opening) + 1
+        page = page[:insert_at] + DEMO_BANNER + page[insert_at:]
+    else:
+        page = DEMO_BANNER + page
+
+    headers = dict(response.headers)
+    headers.pop("content-length", None)
+    return Response(
+        content=page.encode("utf-8"),
+        status_code=response.status_code,
+        headers=headers,
+        media_type=response.media_type,
+    )
+
+
 LANDING_TEMPLATE_PATH = Path(__file__).parent / "templates" / "public_landing.html"
 
 
 @app.get("/", include_in_schema=False)
-def public_landing() -> HTMLResponse:
-    """Describe the project at the browser root.
+def browser_root():
+    """Send the browser to the product when there is a product to show.
 
-    The application routes need an owner session and a configured database, so
-    on a public deployment they correctly refuse to serve anything. That left
-    the root as a bare 503. This page explains what the system is and stays
-    entirely static: it reads no database, no provider, and no client record.
+    A real deployment and the seeded demo both open on the dashboard. Only a
+    public deployment with neither owner auth nor demo data falls back to the
+    static description, because in that state every route below is closed.
     """
+    if demo_mode_enabled() or auth_is_configured():
+        return RedirectResponse(url="/dashboard")
+    return HTMLResponse(LANDING_TEMPLATE_PATH.read_text(encoding="utf-8"))
+
+
+@app.get("/about", include_in_schema=False)
+def about_page() -> HTMLResponse:
+    """Describe the project. Static: no database, no provider, no client record."""
     return HTMLResponse(LANDING_TEMPLATE_PATH.read_text(encoding="utf-8"))
 
 

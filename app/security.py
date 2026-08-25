@@ -6,11 +6,12 @@ import re
 from urllib.parse import quote, urlparse
 
 from fastapi import Request
-from fastapi.responses import JSONResponse, RedirectResponse
+from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse
 
 from app.auth_service import SESSION_COOKIE, auth_is_configured, auth_is_required, find_owner_session
 from app.agency_access_service import has_capability, role_for_email
 from app.database import SessionLocal
+from app.demo_mode import DEMO_OWNER_EMAIL, DEMO_ROLE, demo_mode_enabled
 
 
 EXEMPT_PATHS = {
@@ -34,6 +35,27 @@ EXEMPT_PATHS = {
 }
 EXEMPT_PREFIXES = ("/auth/login", "/static/")
 UNSAFE_METHODS = {"POST", "PUT", "PATCH", "DELETE"}
+
+DEMO_READ_ONLY_PAGE = """<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Read-only demo</title></head>
+<body style="margin:0;min-height:100vh;display:flex;align-items:center;
+justify-content:center;background:#f7f8fa;color:#0f172a;
+font:16px/1.6 -apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;">
+<div style="max-width:32rem;padding:40px 32px;text-align:center;">
+<p style="margin:0 0 10px;font-size:12px;font-weight:700;letter-spacing:2px;
+text-transform:uppercase;color:#4f46e5;">Read-only demo</p>
+<h1 style="margin:0 0 14px;font-size:26px;letter-spacing:-0.02em;">
+That control is real, but it is switched off here</h1>
+<p style="margin:0 0 24px;color:#5b6474;">
+This deployment is a public demo running on invented data. It answers every
+read, and refuses everything that would change state, so the sample portfolio
+stays the same for the next visitor.</p>
+<a href="/dashboard" style="display:inline-block;padding:11px 20px;
+border-radius:9px;background:#4f46e5;color:#fff;font-size:14px;font-weight:600;
+text-decoration:none;">Back to the dashboard</a>
+</div></body></html>"""
 
 
 def _is_exempt(path: str) -> bool:
@@ -86,6 +108,22 @@ async def enforce_request_security(request: Request, call_next):
     if _is_exempt(path):
         return await call_next(request)
     if not auth_is_configured():
+        if demo_mode_enabled():
+            # The public demo is readable but immutable. Refusing every unsafe
+            # method here means no route, form, or job can be reached in a way
+            # that changes state, whatever the rest of the app would allow.
+            if request.method in UNSAFE_METHODS:
+                if _wants_html(request):
+                    # A visitor who clicks a real control should get an
+                    # explanation and a way back, not a raw JSON body.
+                    return HTMLResponse(DEMO_READ_ONLY_PAGE, status_code=403)
+                return JSONResponse(
+                    {"detail": "demo_is_read_only"}, status_code=403
+                )
+            request.state.owner_email = DEMO_OWNER_EMAIL
+            request.state.agency_role = DEMO_ROLE
+            request.state.demo_mode = True
+            return await call_next(request)
         if auth_is_required():
             return JSONResponse({"detail": "owner_auth_not_configured"}, status_code=503)
         request.state.owner_email = "local-development"
