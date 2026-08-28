@@ -95,7 +95,7 @@ def test_browser_root_describes_the_project_without_client_data() -> None:
     assert response.headers["content-type"].startswith("text/html")
     assert "<h1>Max</h1>" in response.text
     # The page must never grow a data-backed section.
-    assert "dummy data" in response.text
+    assert "made up" in response.text
 
 
 def test_dashboard_keeps_each_clients_onboarding_status_separate() -> None:

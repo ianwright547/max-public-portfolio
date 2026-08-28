@@ -71,11 +71,10 @@ DEMO_BANNER = (
     'gap:8px 16px;align-items:center;justify-content:center;padding:9px 16px;'
     'background:#312e81;color:#e0e7ff;font:13px/1.5 -apple-system,BlinkMacSystemFont,'
     '\'Segoe UI\',Helvetica,Arial,sans-serif;text-align:center;">'
-    '<span><strong style="color:#fff;">Live demo &middot; read-only.</strong> '
-    'Every client, metric, and report below is invented sample data. '
-    'Changes are refused.</span>'
+    '<span><strong style="color:#fff;">Demo, read only.</strong> '
+    'All these clients are made up. You can click around but nothing saves.</span>'
     '<a href="/about" style="color:#fff;text-decoration:underline;">'
-    'About this project</a>'
+    'What this is</a>'
     "</div>"
 )
 

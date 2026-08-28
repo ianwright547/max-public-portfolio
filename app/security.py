@@ -45,16 +45,15 @@ justify-content:center;background:#f7f8fa;color:#0f172a;
 font:16px/1.6 -apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;">
 <div style="max-width:32rem;padding:40px 32px;text-align:center;">
 <p style="margin:0 0 10px;font-size:12px;font-weight:700;letter-spacing:2px;
-text-transform:uppercase;color:#4f46e5;">Read-only demo</p>
+text-transform:uppercase;color:#4f46e5;">Demo</p>
 <h1 style="margin:0 0 14px;font-size:26px;letter-spacing:-0.02em;">
-That control is real, but it is switched off here</h1>
+That button works, just not here</h1>
 <p style="margin:0 0 24px;color:#5b6474;">
-This deployment is a public demo running on invented data. It answers every
-read, and refuses everything that would change state, so the sample portfolio
-stays the same for the next visitor.</p>
+This is the demo so I turned off anything that changes data. Otherwise the
+sample clients would be a mess by the time the next person looked at it.</p>
 <a href="/dashboard" style="display:inline-block;padding:11px 20px;
 border-radius:9px;background:#4f46e5;color:#fff;font-size:14px;font-weight:600;
-text-decoration:none;">Back to the dashboard</a>
+text-decoration:none;">Go back</a>
 </div></body></html>"""
 
 

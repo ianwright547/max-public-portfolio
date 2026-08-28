@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Max — Agency Operations Platform</title>
-<meta name="description" content="Max is an agency-operations platform for local SEO and website fulfillment. This is the public portfolio copy.">
+<title>Max</title>
+<meta name="description" content="Agency software for local SEO and website work. This is the demo.">
 <style>
   :root {
     --bg: #f7f8fa;
@@ -13,7 +13,6 @@
     --muted: #5b6474;
     --line: #e4e7ec;
     --accent: #4f46e5;
-    --accent-soft: #eef2ff;
     --code: #f1f3f7;
   }
 
@@ -25,7 +24,6 @@
       --muted: #9aa5b4;
       --line: #262d38;
       --accent: #8b93ff;
-      --accent-soft: #1c2130;
       --code: #1b222c;
     }
   }
@@ -34,119 +32,56 @@
 
   body {
     margin: 0;
-    padding: 0;
     background: var(--bg);
     color: var(--ink);
-    font: 16px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    font: 16px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
   }
 
   .wrap {
-    max-width: 860px;
+    max-width: 660px;
     margin: 0 auto;
-    padding: 64px 24px 96px;
-  }
-
-  .eyebrow {
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin: 0 0 12px;
+    padding: 72px 24px 96px;
   }
 
   h1 {
-    font-size: clamp(32px, 6vw, 46px);
-    line-height: 1.15;
+    font-size: 34px;
     letter-spacing: -0.02em;
-    margin: 0 0 16px;
+    margin: 0 0 6px;
   }
 
-  .lede {
-    font-size: 18px;
-    color: var(--muted);
+  .url {
     margin: 0 0 32px;
-    max-width: 62ch;
-  }
-
-  .banner {
-    border: 1px solid var(--line);
-    border-left: 3px solid var(--accent);
-    background: var(--accent-soft);
-    border-radius: 10px;
-    padding: 16px 20px;
-    font-size: 14px;
     color: var(--muted);
-    margin: 0 0 40px;
+    font-size: 15px;
   }
 
-  .banner strong { color: var(--ink); }
+  p { margin: 0 0 20px; }
 
   h2 {
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 1.6px;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin: 48px 0 16px;
+    font-size: 17px;
+    margin: 36px 0 12px;
   }
 
-  .flow {
-    display: block;
-    width: 100%;
-    overflow-x: auto;
-    background: var(--code);
-    border: 1px solid var(--line);
-    border-radius: 10px;
-    padding: 16px 20px;
+  code {
     font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-    font-size: 13px;
-    color: var(--ink);
-    white-space: nowrap;
-  }
-
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 16px;
-  }
-
-  .card {
-    background: var(--panel);
-    border: 1px solid var(--line);
-    border-radius: 12px;
-    padding: 20px;
-  }
-
-  .card h3 {
-    font-size: 15px;
-    margin: 0 0 8px;
-  }
-
-  .card p {
-    font-size: 14px;
-    color: var(--muted);
-    margin: 0;
-  }
-
-  .stack {
-    font-size: 14px;
-    color: var(--muted);
-    margin: 0;
+    font-size: 0.88em;
+    background: var(--code);
+    padding: 2px 6px;
+    border-radius: 5px;
   }
 
   .links {
     display: flex;
     flex-wrap: wrap;
     gap: 12px;
-    margin-top: 20px;
+    margin-top: 32px;
   }
 
   .btn {
     display: inline-block;
-    padding: 11px 20px;
-    border-radius: 9px;
+    padding: 10px 18px;
+    border-radius: 8px;
     font-size: 14px;
     font-weight: 600;
     text-decoration: none;
@@ -160,96 +95,61 @@
     border-color: var(--accent);
     color: #fff;
   }
-
-  footer {
-    margin-top: 56px;
-    padding-top: 24px;
-    border-top: 1px solid var(--line);
-    font-size: 13px;
-    color: var(--muted);
-  }
-
-  code {
-    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-    font-size: 0.9em;
-    background: var(--code);
-    padding: 2px 6px;
-    border-radius: 5px;
-  }
 </style>
 </head>
 <body>
 <div class="wrap">
 
-  <p class="eyebrow">Portfolio Project</p>
   <h1>Max</h1>
-  <p class="lede">
-    An agency-operations platform for local SEO and website fulfillment. It turns a
-    plain-language client request into grounded recommendations, reports, tasks, and
-    approval-gated fulfillment handoffs.
+  <p class="url">max.ianmwright.com</p>
+
+  <p>
+    Agency software for local SEO and website work. You onboard a client, connect
+    whatever accounts they'll actually give you access to, and then ask for things
+    in plain language instead of clicking through a bunch of forms. It turns that
+    into reports, plans, daily tasks and handoffs.
   </p>
 
-  <div class="banner">
-    <strong>This is the public portfolio copy.</strong> The application routes on this
-    domain are intentionally closed &mdash; they require an owner session and a configured
-    database, so they return <code>503</code> rather than exposing an agency workspace.
-    All example data in the repository is dummy data. Nothing here reads a production
-    database, a provider token, or a real client report.
-  </div>
-
-  <h2>Core loop</h2>
-  <div class="flow">client context → evidence collection → diagnosis → prioritized plan → approval → fulfillment handoff → verification → outcome update</div>
-
-  <h2>What the system does</h2>
-  <div class="grid">
-    <div class="card">
-      <h3>Durable workflows</h3>
-      <p>Onboarding, plans, reports, approvals, jobs, retries, and outcomes are persisted rather than held only in a conversation.</p>
-    </div>
-    <div class="card">
-      <h3>Evidence-first reporting</h3>
-      <p>Every conclusion carries a source, freshness, confidence, and verification status. Unknown access is reported as unknown, never invented.</p>
-    </div>
-    <div class="card">
-      <h3>Human-in-the-loop</h3>
-      <p>Recommendations generate cheaply, but consequential external writes require explicit authorization and a final provider-health check.</p>
-    </div>
-    <div class="card">
-      <h3>Provider boundaries</h3>
-      <p>Slack, GitHub, Vercel, Search Console, and Google Business Profile are adapters with safe failure codes instead of hidden side effects.</p>
-    </div>
-    <div class="card">
-      <h3>Authorization</h3>
-      <p>Secrets stay in runtime configuration, agency scope is role-enforced, and privileged job routes require a separate shared secret.</p>
-    </div>
-    <div class="card">
-      <h3>Operational visibility</h3>
-      <p>Readiness checks, provider verification, scheduler health, and execution evidence make failures diagnosable.</p>
-    </div>
-  </div>
-
-  <h2>Stack</h2>
-  <p class="stack">
-    Python, FastAPI, Pydantic, SQLAlchemy, Alembic, SQLite/Postgres, server-rendered
-    HTML/CSS, Slack and Google APIs, GitHub and Vercel adapters, pytest, GitHub Actions.
+  <p>
+    This demo is read only and every client in it is made up. There are six of them
+    at different stages so the screens aren't all showing the same happy path.
   </p>
 
-  <h2>Review</h2>
-  <p class="stack">
-    The sanitized public checkout bootstraps a test schema and passes its full suite with
-    dummy configuration. The repository README documents a suggested review path through
-    the evidence and authorization boundaries.
+  <h2>The part I actually care about</h2>
+
+  <p>
+    One of the demo clients has a deliberately broken Search Console connection.
+    That's there on purpose. The whole reason I built it this way is that when the
+    system can't verify something, it needs to say so instead of dropping a zero in
+    and letting you think that's the real number. A report that quietly reports
+    nothing as zero is worse than no report.
+  </p>
+
+  <h2>How it's put together</h2>
+
+  <p>
+    Client context, then evidence, then a diagnosis, then a plan, then approval,
+    then the actual work, then verification. Anything that writes to a real provider
+    needs explicit approval plus a live access check right before it runs. The
+    failure mode I was worried about was it confidently doing something to a real
+    client's Google listing.
+  </p>
+
+  <p>
+    Python and FastAPI, SQLAlchemy on Postgres, server rendered HTML. Slack and
+    Google APIs, GitHub and Vercel adapters. Built with AI tools in the loop.
+  </p>
+
+  <p>
+    If you're poking through the code, <code>app/report_builder.py</code> and
+    <code>app/client_provider_verification.py</code> are where the evidence and
+    permission boundaries live.
   </p>
 
   <div class="links">
-    <a class="btn primary" href="https://github.com/ianwright547/max-public-portfolio">View the source</a>
-    <a class="btn" href="/openapi.json">API contract</a>
+    <a class="btn primary" href="/dashboard">Open the demo</a>
+    <a class="btn" href="https://github.com/ianwright547/max-public-portfolio">Code</a>
   </div>
-
-  <footer>
-    Built by Ian Wright. This page describes system design and engineering decisions; it is
-    not a claim that this deployment is a live production SaaS or a real client account.
-  </footer>
 
 </div>
 </body>

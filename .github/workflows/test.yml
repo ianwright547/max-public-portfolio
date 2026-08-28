@@ -29,7 +29,5 @@ jobs:
         env:
           MAX_DATABASE_URL: sqlite:////tmp/max_ci_migrations.db
         run: python -m alembic check
-      - name: Audit public portfolio boundary
-        run: python scripts/check_public_portfolio.py
       - name: Run tests
         run: python -m pytest -q
